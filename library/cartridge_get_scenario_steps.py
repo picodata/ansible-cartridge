@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 
@@ -22,7 +22,7 @@ def get_step_name_from_path(path):
 def get_steps_paths_from_dir(dir_path):
     steps_paths = {}
 
-    if dir_path is None:
+    if not dir_path:
         return steps_paths
 
     file_names = os.listdir(dir_path)
@@ -57,7 +57,7 @@ def get_steps_paths(role_path, custom_steps_dir, custom_steps):
 
 
 def get_scenario(scenario, role_scenarios, custom_scenarios, scenario_name):
-    if scenario is None:
+    if not scenario:
         scenarios = role_scenarios.copy()
         scenarios.update(custom_scenarios)
         if scenario_name not in scenarios:

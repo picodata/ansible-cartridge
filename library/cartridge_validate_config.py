@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import re
@@ -540,7 +540,7 @@ def check_scenario(found_common_params):
                 return "Incorrect type of task name '%s'. String expected, got: %s" % (task, type(task))
 
     dir_path = found_common_params.get('cartridge_custom_steps_dir')
-    if dir_path is not None:
+    if dir_path:
         if not os.path.exists(dir_path):
             return "Directory '%s' from 'cartridge_custom_steps_dir' doesn't exists" % dir_path
 
