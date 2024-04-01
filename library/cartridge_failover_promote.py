@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 from ansible.module_utils.helpers import Helpers as helpers
 

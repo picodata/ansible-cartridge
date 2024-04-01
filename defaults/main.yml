@@ -12,8 +12,8 @@ cartridge_force_leader_control_instance: false
 
 # Role scenario configuration
 
-cartridge_scenario: null
-cartridge_custom_steps_dir: null
+cartridge_scenario: []
+cartridge_custom_steps_dir: ''
 cartridge_custom_steps: []
 
 cartridge_scenario_name: 'default'
