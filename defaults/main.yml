@@ -176,6 +176,10 @@ cartridge_ignore_extra_cluster_instances: false
 cartridge_ignore_extra_cluster_replicasets: false
 cartridge_ignore_renamed_replicasets: false
 
+# Ignore failover priority
+
+ignore_failover_priority: false
+
 # Role defaults
 
 cartridge_role_scenarios:
