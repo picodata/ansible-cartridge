@@ -15,6 +15,7 @@ argument_spec = {
     'allow_missed_instances': {'required': True, 'type': 'bool'},
     'check_mode': {'required': False, 'type': 'bool', 'default': False},
     'ignore_errors_of_checks': {'required': False, 'type': 'dict', 'default': {}},
+    'ignore_failover_priority': {'required': False, 'type': 'bool', 'default': False},
 }
 
 ADVERTISE_URIS_CHANGE_CHECK_NAME = 'advertise_uris_change'
@@ -784,6 +785,7 @@ def edit_topology(params):
     allow_missed_instances = params['allow_missed_instances']
     check_mode = params.get('check_mode', False)
     ignore_errors_of_checks = params.get('ignore_errors_of_checks', {})
+    ignore_failover_priority = params['ignore_failover_priority']
 
     # Collect information about instances and replicasets from inventory
 
@@ -865,9 +867,14 @@ def edit_topology(params):
     # * Edit failover_priority of replicasets if it's needed.
     # * Configure instances that weren't configured on first `edit_topology` call.
 
+    ignore_priority = None
+    
+    if not ignore_failover_priority:
+        ignore_priority = get_replicasets_params_for_changing_failover_priority
+    
     changed_on_third_call, err = single_edit_topology_call(
         control_console,
-        get_replicasets_params_for_changing_failover_priority,
+        ignore_priority,
         get_servers_params,
         new_instances, old_instances,
         new_replicasets, old_replicasets,
