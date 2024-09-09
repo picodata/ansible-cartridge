@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from copy import deepcopy
 
 from ansible.module_utils.helpers import Helpers as helpers

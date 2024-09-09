@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 
 from ansible.module_utils.helpers import Helpers as helpers
