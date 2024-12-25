@@ -65,6 +65,7 @@ FALOVER_MODES = [
     'stateful',
     'eventual',
     'disabled',
+    'raft',
 ]
 
 STATEFUL_FAILOVER_PARAMS = [
