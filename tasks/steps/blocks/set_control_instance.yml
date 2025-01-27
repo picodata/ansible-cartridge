@@ -11,6 +11,7 @@
     console_sock: '{{ alive_not_expelled_instance.console_sock }}'
     app_name: '{{ cartridge_app_name }}'
     leader_only: '{{ cartridge_force_leader_control_instance }}'
+    role_name: '{{ cartridge_control_instance_with_role }}'
   run_once: true
   delegate_to: '{{ alive_not_expelled_instance.name }}'
   register: control_instance_res

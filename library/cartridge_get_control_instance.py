@@ -7,6 +7,7 @@ argument_spec = {
     'console_sock': {'required': True, 'type': 'str'},
     'app_name': {'required': True, 'type': 'str'},
     'leader_only': {'required': False, 'type': 'bool', 'default': False},
+    'role_name': {'required': False, 'type': 'str'}
 }
 
 GET_TWOPHASE_COMMIT_VERSION_TIMEOUT = 60
@@ -99,6 +100,7 @@ def get_control_instance_name(
     play_hosts,
     control_console,
     leader_only=False,
+    role_name=None,
 ):
     members, err = get_membership_members(control_console)
     if err is not None:
@@ -145,7 +147,8 @@ def get_control_instance_name(
             leaders_uris.append(uri)
 
     if alien_members_uris:
-        helpers.warn('Incorrect members with the following URIs ignored: %s' % ', '.join(alien_members_uris))
+        helpers.warn('Incorrect members with the following URIs ignored: %s' %
+                     ', '.join(alien_members_uris))
 
     alive_instances_uris = set()
     joined_instances_uris = set()
@@ -205,7 +208,8 @@ def get_control_instance_name(
 
     # filter out instances that are marked to be expelled
     candidates_uris = list(filter(
-        lambda uri: candidate_is_ok(uri, names_by_uris, module_hostvars, cluster_disabled_instances),
+        lambda uri: candidate_is_ok(uri, names_by_uris, module_hostvars,
+                                    cluster_disabled_instances),
         candidates_uris
     ))
 
@@ -220,7 +224,8 @@ def get_control_instance_name(
         return None, "Failed to check instances two-phase commit version: %s" % err
 
     min_version = min(twophase_commit_versions)
-    min_version_candidates = filter(lambda c: twophase_commit_versions[c[0]] == min_version, enumerate(candidates_uris))
+    min_version_candidates = filter(
+        lambda c: twophase_commit_versions[c[0]] == min_version, enumerate(candidates_uris))
     candidates_uris = list(map(lambda c: c[1], min_version_candidates))
 
     if leader_only:
@@ -230,6 +235,19 @@ def get_control_instance_name(
         candidates_uris = leader_candidates_uris
 
     control_instance_uri = candidates_uris[0]
+    if role_name:
+        cluster_replicasets = helpers.get_cluster_replicasets(control_console)
+        instances = {}
+        for _, repicaset in cluster_replicasets.items():
+            if repicaset["enabled_roles"].get(role_name):
+                for instance in repicaset["instances"]:
+                    instances[instance] = True
+
+        for candidat_uri in candidates_uris:
+            if instances.get(names_by_uris[candidat_uri]):
+                control_instance_uri = candidat_uri
+                break
+
     control_instance_name = names_by_uris[control_instance_uri]
 
     return control_instance_name, None
@@ -242,11 +260,13 @@ def get_control_instance(params):
     console_sock = params['console_sock']
     app_name = params['app_name']
     leader_only = params.get('leader_only', False)
+    role_name = params.get('role_name')
 
     control_console = helpers.get_control_console(console_sock)
 
     control_instance_name, err = get_control_instance_name(
-        module_hostvars, cluster_disabled_instances, play_hosts, control_console, leader_only
+        module_hostvars, cluster_disabled_instances, play_hosts,
+        control_console, leader_only, role_name
     )
     if err is not None:
         return helpers.ModuleRes(failed=True, msg=err)

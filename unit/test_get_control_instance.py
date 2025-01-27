@@ -87,7 +87,8 @@ class TestGetControlInstance(unittest.TestCase):
         ])
         res = call_get_control_instance('myapp', self.console_sock, hostvars)
         self.assertFalse(res.failed)
-        self.assertIn("Incorrect members with the following URIs ignored: empty-member-uri", helpers.WARNINGS)
+        self.assertIn(
+            "Incorrect members with the following URIs ignored: empty-member-uri", helpers.WARNINGS)
 
         # with empty payload
         helpers.WARNINGS = []
@@ -97,7 +98,8 @@ class TestGetControlInstance(unittest.TestCase):
         ])
         res = call_get_control_instance('myapp', self.console_sock, hostvars)
         self.assertFalse(res.failed)
-        self.assertIn("Incorrect members with the following URIs ignored: empty-payload-uri", helpers.WARNINGS)
+        self.assertIn(
+            "Incorrect members with the following URIs ignored: empty-payload-uri", helpers.WARNINGS)
 
         # without alias
         helpers.WARNINGS = []
@@ -212,7 +214,8 @@ class TestGetControlInstance(unittest.TestCase):
         ])
         res = call_get_control_instance('myapp', self.console_sock, hostvars)
         self.assertFalse(res.failed)
-        self.assertIn("Incorrect members with the following URIs ignored: instance-2-uri", helpers.WARNINGS)
+        self.assertIn(
+            "Incorrect members with the following URIs ignored: instance-2-uri", helpers.WARNINGS)
 
         # both without UUID (one is selected)
         self.instance.set_membership_members([
@@ -238,9 +241,12 @@ class TestGetControlInstance(unittest.TestCase):
 
     def test_no_joined_instances(self):
         hostvars = {}
-        hostvars.update(get_instance_hostvars('instance-4', 'some-rpl', run_dir='run-dir-4', http_port=8084))
-        hostvars.update(get_instance_hostvars('instance-3', 'some-rpl', run_dir='run-dir-3', http_port=8083))
-        hostvars.update(get_instance_hostvars('instance-2-no-rpl', run_dir='run-dir-2', http_port=8082))
+        hostvars.update(get_instance_hostvars(
+            'instance-4', 'some-rpl', run_dir='run-dir-4', http_port=8084))
+        hostvars.update(get_instance_hostvars(
+            'instance-3', 'some-rpl', run_dir='run-dir-3', http_port=8083))
+        hostvars.update(get_instance_hostvars(
+            'instance-2-no-rpl', run_dir='run-dir-2', http_port=8082))
         hostvars.update(get_instance_hostvars(
             'instance-1-expelled', run_dir='run-dir-1', http_port=8081, expelled=True
         ))
@@ -318,13 +324,17 @@ class TestGetControlInstance(unittest.TestCase):
 
         res = call_get_control_instance('myapp', self.console_sock, hostvars)
         self.assertTrue(res.failed, res.fact)
-        self.assertIn("Membership contains instance 'instance-3' that isn't described in inventor", res.msg)
+        self.assertIn(
+            "Membership contains instance 'instance-3' that isn't described in inventor", res.msg)
 
     def test_twophase_commit_versions(self):
         hostvars = {}
-        hostvars.update(get_instance_hostvars('instance-1', 'some-rpl', run_dir='run-dir-1', http_port=8081))
-        hostvars.update(get_instance_hostvars('instance-2', 'some-rpl', run_dir='run-dir-2', http_port=8082))
-        hostvars.update(get_instance_hostvars('instance-3', 'some-rpl', run_dir='run-dir-3', http_port=8083))
+        hostvars.update(get_instance_hostvars(
+            'instance-1', 'some-rpl', run_dir='run-dir-1', http_port=8081))
+        hostvars.update(get_instance_hostvars(
+            'instance-2', 'some-rpl', run_dir='run-dir-2', http_port=8082))
+        hostvars.update(get_instance_hostvars(
+            'instance-3', 'some-rpl', run_dir='run-dir-3', http_port=8083))
 
         # instance-3 has lower version of twophase commit
         global twophase_commit_versions
@@ -501,7 +511,8 @@ class TestGetControlInstance(unittest.TestCase):
         ])
         res = call_get_control_instance('myapp', self.console_sock, hostvars, leader_only=True)
         self.assertTrue(res.failed)
-        self.assertIn("Not found any leader instance between the candidates: instance-1-uri, instance-3-uri", res.msg)
+        self.assertIn(
+            "Not found any leader instance between the candidates: instance-1-uri, instance-3-uri", res.msg)
 
     def tearDown(self):
         self.instance.stop()
