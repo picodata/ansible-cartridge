@@ -79,6 +79,9 @@ allowed_members_states: ['RolesConfigured']
 wait_members_alive_retries: 10
 wait_members_alive_delay: 5
 
+force_leaders_retries: 10
+force_leaders_delay: 5
+
 # Replicasets configuration
 
 replicaset_alias: null
@@ -307,6 +310,8 @@ cartridge_cached_fact_names_by_target:
     - allowed_members_states
     - wait_members_alive_retries
     - wait_members_alive_delay
+    - force_leaders_retries
+    - force_leaders_delay
     - allow_warning_issues
     - show_issues
     - wait_cluster_has_no_issues_retries

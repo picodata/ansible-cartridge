@@ -82,6 +82,9 @@
       wait_members_alive_retries: '{{ wait_members_alive_retries }}'
       wait_members_alive_delay: '{{ wait_members_alive_delay }}'
 
+      force_leaders_retries: '{{ force_leaders_retries }}'
+      force_leaders_delay: '{{ force_leaders_delay }}'
+
       # Replicasets configuration
 
       replicaset_alias: '{{ replicaset_alias }}'
