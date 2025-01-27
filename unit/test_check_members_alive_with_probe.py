@@ -23,10 +23,6 @@ def set_known_servers(instance, servers):
     })
 
 
-URI1 = '127.0.0.1:3301'
-URI2 = '127.0.0.1:3302'
-
-
 class TestInstanceStarted(unittest.TestCase):
     def setUp(self):
         self.instance = Instance()
