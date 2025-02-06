@@ -19,14 +19,8 @@ def probe_servers(control_console):
         end
         
         for _, _, server in fun.filter(cartridge_topology.not_disabled, topology_cfg.servers) do
-            local res, err = cartridge.admin_probe_server(server.uri)
-
-            if err ~= nil then
-                return nil, string.format("Failed to probe server: %s", server.uri)
-            end
-
+            cartridge.admin_probe_server(server.uri)
         end
-        return true
     ''')
 
 
