@@ -9,6 +9,7 @@ cartridge_remove_temporary_files: false
 cartridge_ignore_split_brain: false
 cartridge_paths_to_keep_on_cleanup: []
 cartridge_force_leader_control_instance: false
+cartridge_control_instance_with_role: null
 
 # Role scenario configuration
 
@@ -78,6 +79,9 @@ instance_discover_buckets_delay: 5
 allowed_members_states: ['RolesConfigured']
 wait_members_alive_retries: 10
 wait_members_alive_delay: 5
+
+force_leaders_retries: 10
+force_leaders_delay: 5
 
 # Replicasets configuration
 
@@ -307,6 +311,8 @@ cartridge_cached_fact_names_by_target:
     - allowed_members_states
     - wait_members_alive_retries
     - wait_members_alive_delay
+    - force_leaders_retries
+    - force_leaders_delay
     - allow_warning_issues
     - show_issues
     - wait_cluster_has_no_issues_retries
@@ -329,6 +335,7 @@ cartridge_cached_fact_names_by_target:
     - cartridge_create_user_group_for_tgz
     - cartridge_force_advertise_uris_change
     - cartridge_force_leader_control_instance
+    - cartridge_control_instance_with_role
     - cartridge_ignore_extra_cluster_instances
     - cartridge_ignore_extra_cluster_replicasets
     - cartridge_ignore_renamed_replicasets

@@ -219,7 +219,8 @@ def sort_instances_to_join_by_failover_priority(
 
     instances_to_join = list(sorted(
         instances_to_join,
-        key=lambda s: new_failover_priority.index(s) if s in new_failover_priority else len(instances_to_join)
+        key=lambda s: new_failover_priority.index(
+            s) if s in new_failover_priority else len(instances_to_join)
     ))
 
     return instances_to_join, None
@@ -783,7 +784,7 @@ def edit_topology(params):
     allow_missed_instances = params['allow_missed_instances']
     check_mode = params.get('check_mode', False)
     ignore_errors_of_checks = params.get('ignore_errors_of_checks', {})
-    ignore_failover_priority = params['ignore_failover_priority']
+    ignore_failover_priority = params.get('ignore_failover_priority', False)
 
     # Collect information about instances and replicasets from inventory
 
@@ -866,10 +867,10 @@ def edit_topology(params):
     # * Configure instances that weren't configured on first `edit_topology` call.
 
     ignore_priority = None
-    
+
     if not ignore_failover_priority:
         ignore_priority = get_replicasets_params_for_changing_failover_priority
-    
+
     changed_on_third_call, err = single_edit_topology_call(
         control_console,
         ignore_priority,

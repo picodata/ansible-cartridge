@@ -82,6 +82,9 @@
       wait_members_alive_retries: '{{ wait_members_alive_retries }}'
       wait_members_alive_delay: '{{ wait_members_alive_delay }}'
 
+      force_leaders_retries: '{{ force_leaders_retries }}'
+      force_leaders_delay: '{{ force_leaders_delay }}'
+
       # Replicasets configuration
 
       replicaset_alias: '{{ replicaset_alias }}'
@@ -157,3 +160,4 @@
       cartridge_ignore_extra_cluster_instances: '{{ cartridge_ignore_extra_cluster_instances }}'
       cartridge_ignore_extra_cluster_replicasets: '{{ cartridge_ignore_extra_cluster_replicasets }}'
       cartridge_ignore_renamed_replicasets: '{{ cartridge_ignore_renamed_replicasets }}'
+      cartridge_control_instance_with_role: '{{ cartridge_control_instance_with_role }}'

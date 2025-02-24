@@ -19,5 +19,9 @@
         netbox_call_timeout: '{{ twophase_netbox_call_timeout }}'
         upload_config_timeout: '{{ twophase_upload_config_timeout }}'
         apply_config_timeout: '{{ twophase_apply_config_timeout }}'
+      register: check_force_leaders_res
+      until: not check_force_leaders_res.failed
+      retries: '{{ force_leaders_retries }}'
+      delay: '{{ force_leaders_delay }}'
       run_once: true
       delegate_to: '{{ control_instance.name }}'

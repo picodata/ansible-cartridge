@@ -39,6 +39,7 @@ PARAMS_THE_SAME_FOR_ALL_HOSTS = [
     'cartridge_create_user_group_for_tgz',
     'cartridge_force_advertise_uris_change',
     'cartridge_force_leader_control_instance',
+    'cartridge_control_instance_with_role',
     'cartridge_ignore_extra_cluster_instances',
     'cartridge_ignore_extra_cluster_replicasets',
     'cartridge_ignore_renamed_replicasets',
@@ -230,6 +231,8 @@ SCHEMA = {
     'allowed_members_states': [str],
     'wait_members_alive_retries': int,
     'wait_members_alive_delay': int,
+    'force_leaders_retries': int,
+    'force_leaders_delay': int,
     'allow_warning_issues': bool,
     'show_issues': bool,
     'wait_cluster_has_no_issues_retries': int,
@@ -241,6 +244,7 @@ SCHEMA = {
     'cartridge_create_user_group_for_tgz': bool,
     'cartridge_force_advertise_uris_change': bool,
     'cartridge_force_leader_control_instance': bool,
+    'cartridge_control_instance_with_role': str,
     'cartridge_ignore_extra_cluster_instances': bool,
     'cartridge_ignore_extra_cluster_replicasets': bool,
     'cartridge_ignore_renamed_replicasets': bool,
@@ -328,7 +332,8 @@ def check_instance_config(config, host):
 
     if 'advertise_uri' in config:
         if not is_valid_advertise_uri(config['advertise_uri']):
-            errmsg = "Instance advertise_uri must be specified as '<host>:<port>' ('{}')".format(host)
+            errmsg = "Instance advertise_uri must be specified as '<host>:<port>' ('{}')".format(
+                host)
             return errmsg
 
     return None
@@ -385,7 +390,8 @@ def check_app_config(found_common_params):
             return errmsg
 
         if not section:
-            errmsg = "'cartridge_app_config.{}' must have 'body' or 'deleted' subsection".format(section_name)
+            errmsg = "'cartridge_app_config.{}' must have 'body' or 'deleted' subsection".format(
+                section_name)
             return errmsg
 
         allowed_keys = ['body', 'deleted']

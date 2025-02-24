@@ -270,7 +270,8 @@ class TestValidateConfig(unittest.TestCase):
             }
         })
         self.assertTrue(res.failed)
-        self.assertIn("Instance advertise_uri must be specified as '<host>:<port>' ('instance-1')", res.msg)
+        self.assertIn(
+            "Instance advertise_uri must be specified as '<host>:<port>' ('instance-1')", res.msg)
 
         res = call_validate_config({
             'instance-1': {
@@ -720,7 +721,7 @@ class TestValidateConfig(unittest.TestCase):
         })
         self.assertTrue(res.failed)
         self.assertIn(
-            "Failover mode should be one of ['stateful', 'eventual', 'disabled']",
+            "Failover mode should be one of ['stateful', 'eventual', 'disabled', 'raft']",
             res.msg
         )
 
