@@ -16,7 +16,7 @@ def check_members_status_alive(params):
         local bad_members = {}
 
         for _, member in pairs(members) do
-            if (member.status ~= 'alive') then
+            if (member.status ~= 'alive') and (member.status ~= 'left') then
                 table.insert(bad_members, string.format(
                     '%s status is %s',
                     member.uri, member.status
